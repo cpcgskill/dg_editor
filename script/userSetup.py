@@ -12,5 +12,6 @@ u"""
 import sys
 
 sys.path = [i for i in sys.path if not "\\MASH\\" in i]
-sys.path.append(r"D:\Development\python_maya\dg_editor\src")
-sys.path.append(r"D:\Development\python_maya\dg_editor\script")
+ROOT = r"D:\dev\python_for_maya\tool\dg_editor"
+sys.path.append(ROOT + r"\src")
+sys.path.append(ROOT + r"\script")
