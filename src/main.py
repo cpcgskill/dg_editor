@@ -10,3 +10,9 @@ u"""
 
 """
 # 作为启动模块
+import init
+import main_window
+
+
+def main():
+    return main_window.new()
