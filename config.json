@@ -1,0 +1,9 @@
+{
+  "type": "MayaPlugin",
+  "source": "src",
+  "target": "build",
+  "name": "dg_editor",
+  "exec_script": "import main;main.main()",
+  "log": "log.ico",
+  "annotation": "Maya Dg图编辑工具"
+}

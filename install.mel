@@ -1,0 +1,34 @@
+global proc InstallScriptLocator (){}
+
+global proc string installationScriptLocation ()
+{
+	string $whatIs=`whatIs InstallScriptLocator`;
+	string $fullPath=`substring $whatIs 25 999`;
+	string $buffer[];
+	string $slash="/";
+	if (`gmatch $whatIs "*\\\\*"`){
+		$slash="\\";
+	}
+	int $numTok=`tokenize $fullPath $slash $buffer`;
+	int $numLetters=size($fullPath);
+	int $numLettersLastFolder=size($buffer[$numTok - 1]);
+	string $scriptLocation=`substring $fullPath 1 ($numLetters-$numLettersLastFolder)`;
+	return $scriptLocation;
+}
+{
+	string $configExecScript = "exec(compile(open(plugin_path+'exec.py','rb').read(), plugin_path+'exec.py', 'exec'), globals(), locals())";
+
+	global string $gShelfTopLevel;
+	string $currentShelf = `tabLayout -query -selectTab $gShelfTopLevel`;
+
+	// 获得安装脚本位置
+	string $path=`installationScriptLocation`;
+
+	// 执行脚本
+	string $script="import sys\n";
+	$script += "plugin_path = r'" + $path + "'\n";
+	$script += "sys.path.append(plugin_path)\n";
+	$script += $configExecScript;
+
+	shelfButton -stp python -rpt true -i1 ($path + "log.ico") -c $script -ann "这是一个注释~" -p $currentShelf;//创建工具栏
+}

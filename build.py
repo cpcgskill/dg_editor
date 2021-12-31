@@ -25,6 +25,13 @@ from CPCLI.file_filtering_functions import noTypes
 from CPCLI.processing_function import deleteBlankLines, deleteUselessStrings
 
 
+class Path(object):
+    root = r"D:\backup_to_cloud\dev\python_for_maya\tool\dg_editor"
+    src = root + r"\src"
+    scripts = root + r"\script"
+    build = root + r"\build"
+
+
 class Config(object):
     # 文件过滤函数
     file_filtering_functions = [
@@ -50,11 +57,15 @@ main()'''
     # 可真可假影响不大
     debug = True
 
-    class Path(object):
-        root = r"D:\dev\python_for_maya\tool\dg_editor"
-        src = root + r"\src"
-        scripts = root + r"\script"
-        build = root + r"\build"
+    Path = Path
 
 
 cli_core.build(Config)
+
+with open("log.ico", 'rb') as f:
+    with open("/".join((Path.build, "log.ico")), 'wb') as wf:
+        wf.write(f.read())
+
+with open("install.mel", 'rb') as f:
+    with open("/".join((Path.build, "install.mel")), 'wb') as wf:
+        wf.write(f.read())
